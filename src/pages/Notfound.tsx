@@ -1,7 +1,11 @@
+import { Link } from "react-router-dom"
+
 const Notfound = () => {
     return (
       <div>
-        <h2>Day la cai Notfound</h2>
+        <h1>404</h1>
+        <h2>Oh, Not found!</h2>
+        <Link to='/'>Go to back home</Link>
       </div>
     )
   }

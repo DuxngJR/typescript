@@ -1,7 +1,9 @@
+import Product from "@/components/product"
+
 const ProductDetail = () => {
     return (
       <div>
-        <h2>Day la cai ProductDetail</h2>
+        <Product />
       </div>
     )
   }

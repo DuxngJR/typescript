@@ -1,11 +1,12 @@
-import instance from '@/apis'
-import { productType } from '@/interfaces/Product'
+import instance from "@/apis"
+import { productType } from "@/interfaces/Product"
 import { useEffect, useState } from 'react'
+import { Link } from "react-router-dom"
 
 const ProductList = () => {
-    const [products, setProducts] = useState<productType[]>([])
+  const [products, setProducts] = useState<productType[]>([])
     useEffect(() => {
-      const getProducts = async () => {
+      const getProducts = async () => { 
         try {
           const { data } = await instance.get('/products')
         console.log(data)
@@ -16,24 +17,24 @@ const ProductList = () => {
       }
       getProducts()
     }, [])
-  return (
+    return (
     <div>
-      <h1>Product List</h1>
+      <h2>Product List</h2>
+      <div style={{display: 'flex', gap: 5, flexWrap: 'wrap', justifyContent: 'space-around'}}>
       {products.map((product) => (
         <div key={product.id}>
-          <h2>{product.title}</h2>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
-          <p>{product.discountPercentage}</p>
-          <p>{product.rating}</p>
-          <p>{product.stock}</p>
-          <p>{product.brand}</p>
-          <p>{product.category}</p>
-          <img src={product.thumbnail} alt={product.title} />
+            <div className="card" style={{width: 300}}>
+              <img src={product.thumbnail} className="card-img-top img-thumbnail w-200px" alt={product.title}></img>
+              <div className="card-body">
+                <h5 className="card-title">{product.title}</h5>
+                <p className="card-text">{product.price}</p>
+                <Link to={`shop/${product.id}`} className="btn btn-primary">xem chi tiet san pham</Link>
+              </div>
+          </div>
         </div>
-      ))}
+        ))}
     </div>
-  )
-}
-
-export default ProductList
+    </div>
+   ) 
+  }
+  export default ProductList

@@ -1,39 +1,35 @@
-import instance from "@/apis"
-import { productType } from "@/interfaces/Product"
+import instance from '@/apis'
+import { productType } from '@/interfaces/Product'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 const Product = () => {
-  const [products, setProducts] = useState<productType[]>([])
+    const {id} = useParams()
+    const [product, setProducts] = useState<productType | null>(null)
     useEffect(() => {
       const getProducts = async () => {
-        try {
-          const { data } = await instance.get('/products')
-        console.log(data)
+        const { data } = await instance.get(`/products/${id}`)
         setProducts(data)
-        } catch (error) {
-          console.log(error)
-        }
       }
       getProducts()
     }, [])
-    return (
+  return (
     <div>
-      <h2>Sản Phẩm</h2>
-      <div style={{display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'space-around'}}>
-      {products.map((product) => (
-        <div key={product.id}>
-            <div className="card" style={{width: 300}}>
-              <img src={product.thumbnail} className="card-img-top" alt={product.title}></img>
-              <div className="card-body">
-                <h5 className="card-title">{product.title}</h5>
-                <p className="card-text">{product.price}</p>
-                <a href="#" className="btn btn-primary">Mua</a>
-              </div>
-          </div>
+      <h1>Chi tiet san pham</h1>
+        <div key={product?.id}>
+          <img src={product?.thumbnail} alt={product?.title} />
+          <h2>{product?.title}</h2>
+          <p>{product?.description}</p>
+          <p>{product?.price}</p>
+          <p>{product?.discountPercentage}</p>
+          <p>{product?.rating}</p>
+          <p>{product?.stock}</p>
+          <p>{product?.brand}</p>
+          <p>{product?.category}</p>
         </div>
-        ))}
+     
     </div>
-    </div>
-   ) 
-  }
-  export default Product
+  )
+}
+
+export default Product

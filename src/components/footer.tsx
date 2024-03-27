@@ -3,7 +3,7 @@ type Props = {}
 
 const Footer = (props: Props) => {
   return <>
-    <h1>Footer  daya</h1>
+    <h1>FPT Polytecnich </h1>
   </>
 }
 
