@@ -34,7 +34,9 @@ const Dashboard = ({ products }: Props) => {
               </td>
               <td>{item.description}</td>
               <td>
-                <button className='btn btn-danger'>Update</button>
+              <Link to={`/admin/edit/${item.id}`} className='btn btn-danger'>
+                  Update
+                </Link>
                 <button className='btn btn-warning'>Delete</button>
               </td>
             </tr>

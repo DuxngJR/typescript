@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import './App.css'
 import Footer from './components/footer'
 import Header from './components/header'
@@ -12,10 +12,13 @@ import { useEffect, useState } from 'react'
 import instance from './apis'
 import Dashboard from './pages/admin/Dashboard'
 import ProductAdd from './pages/admin/ProductAdd'
+import { createProduct } from './apis/product'
+import ProductEdit from './pages/admin/ProductEdit'
 
 
 function App() {
   const [products, setProducts] = useState<productType[]>([])
+  const navigate = useNavigate()
     useEffect(() => {
       const getProducts = async () => { 
         try {
@@ -28,6 +31,20 @@ function App() {
       }
       getProducts()
     }, [])
+    const handleAdd = (product: productType) => {
+      (async () => {
+        const data = await createProduct(product)
+        setProducts([...products, data])
+        navigate('/admin')
+      })()
+    }
+    const handleEdit = (product: productType) => {
+      ;(async () => {
+        const { data } = await instance.put(`/products/${product.id}`, product)
+        setProducts(products.map((item) => (item.id === data.id ? data : item)))
+        navigate('/admin')
+      })()
+    }
     return (
     <>
     <Header />
@@ -40,7 +57,8 @@ function App() {
       </Route>
       <Route path='/admin'>
           <Route index element={<Dashboard products={products} />} />
-          <Route path='/admin/add' element={<ProductAdd />} />
+          <Route path='/admin/add' element={<ProductAdd onAdd={handleAdd} />} />
+          <Route path='/admin/edit/:id' element={<ProductEdit onEdit={handleEdit} />} />
       </Route>
       <Route path="*" element={<Notfound />} />
     </Routes>

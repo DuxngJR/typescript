@@ -1,4 +1,5 @@
 // import React from 'react'
+import Banner from '@/components/banner'
 import { productType } from '@/interfaces/Product'
 import { Link } from 'react-router-dom'
 
@@ -9,7 +10,8 @@ type Props = {
 const Home = ({products}:Props) => {
   return (
     <div>
-      <h2>Product List</h2>
+      <Banner/>
+      <h2 className="text-center">Product List</h2>
       <div style={{display: 'flex', gap: 5, flexWrap: 'wrap', justifyContent: 'space-around'}}>
       {products.map((product) => (
         <div key={product.id}>

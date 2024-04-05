@@ -8,7 +8,7 @@ const Product = () => {
     const [product, setProducts] = useState<productType | null>(null)
     useEffect(() => {
       const getProducts = async () => {
-        const { data } = await instance.get(`/products/${id}`)
+        const { data } = await instance.get(`/products/${id!}`)
         setProducts(data)
       }
       getProducts()
